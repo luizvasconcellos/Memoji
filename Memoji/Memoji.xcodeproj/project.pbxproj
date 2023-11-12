@@ -38,6 +38,7 @@
 		F04812CA2AFC6DB500245AD7 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04812C92AFC6DB500245AD7 /* Repository.swift */; };
 		F04812CD2AFC8D8F00245AD7 /* AppleRepositoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04812CC2AFC8D8E00245AD7 /* AppleRepositoriesTableViewController.swift */; };
 		F04812CF2B00081E00245AD7 /* EmojiListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04812CE2B00081E00245AD7 /* EmojiListViewModel.swift */; };
+		F04812D12B01234D00245AD7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04812D02B01234D00245AD7 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		F04812C92AFC6DB500245AD7 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		F04812CC2AFC8D8E00245AD7 /* AppleRepositoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleRepositoriesTableViewController.swift; sourceTree = "<group>"; };
 		F04812CE2B00081E00245AD7 /* EmojiListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiListViewModel.swift; sourceTree = "<group>"; };
+		F04812D02B01234D00245AD7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +205,7 @@
 			children = (
 				F048129D2AF7CA0100245AD7 /* Emojis.swift */,
 				F04812C92AFC6DB500245AD7 /* Repository.swift */,
+				F04812D02B01234D00245AD7 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				F04812CF2B00081E00245AD7 /* EmojiListViewModel.swift in Sources */,
 				F04812C22AFA8C2800245AD7 /* UserDefaultsManager.swift in Sources */,
 				F04812CD2AFC8D8F00245AD7 /* AppleRepositoriesTableViewController.swift in Sources */,
+				F04812D12B01234D00245AD7 /* User.swift in Sources */,
 				F04812942AF7C3CB00245AD7 /* NetworkRequest.swift in Sources */,
 				F04812752AF7B63200245AD7 /* SceneDelegate.swift in Sources */,
 				F048129C2AF7C8E400245AD7 /* MemojiCoordinator.swift in Sources */,

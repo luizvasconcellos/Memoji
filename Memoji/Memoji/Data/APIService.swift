@@ -23,6 +23,7 @@ private struct Parameters {
 protocol APIServiceDelegate {
     func fetchEmojis() -> Single<Emojis>
     func fetchRepos(from users: String, itemsPerPage: Int, page: Int) -> Single<[Repository]>
+    func fetchUser(from user: String) -> Single<User?>
 }
 
 final class APIService {
@@ -68,6 +69,24 @@ extension APIService: APIServiceDelegate {
                         return
                     }
                     observer(.success(repositories))
+                })
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func fetchUser(from user: String) -> Single<User?> {
+        Single.create { [weak self] observer in
+            
+            if let url = URL(string: "\(self?.baseURL ?? "")\(Endpoint.users)/\(user)") {
+                let request = NetworkRequest(method: .get, url: url)
+                self?.network.baseRequest(request: request, type: User.self, completion: { user, error in
+                    guard let user = user else {
+                        observer(.success(nil))
+                        return
+                    }
+                    observer(.success(user))
                 })
             }
             

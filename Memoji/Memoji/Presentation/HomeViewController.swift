@@ -34,7 +34,6 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBlue
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 16
-        view.clipsToBounds = true
         
         return view
     }()
@@ -47,7 +46,6 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBlue
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 16
-        view.clipsToBounds = true
         
         return view
     }()
@@ -60,7 +58,6 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBlue
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 16
-        view.clipsToBounds = true
         
         return view
     }()
@@ -73,7 +70,6 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBlue
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 16
-        view.clipsToBounds = true
         
         return view
     }()
@@ -83,6 +79,39 @@ final class HomeViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 64.0).isActive = true
         view.widthAnchor.constraint(equalToConstant: 64.0).isActive = true
+        
+        return view
+    }()
+    
+    private lazy var searchAvatarStackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        view.spacing = 8
+        return view
+    }()
+    
+    private lazy var searchAvatarTextField: UITextField = {
+        let view = UITextField()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.placeholder = "Search"
+        view.layer.borderColor = UIColor.systemGray4.cgColor
+        view.layer.borderWidth = 2
+        view.layer.cornerRadius = 16
+        
+        
+        return view
+    }()
+    
+    private lazy var searchAvatarButton: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setTitle("search", for: .normal)
+        view.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        view.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        view.backgroundColor = .systemGreen
+        view.setTitleColor(.white, for: .normal)
+        view.layer.cornerRadius = 24
         
         return view
     }()
@@ -105,8 +134,12 @@ final class HomeViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         
+        searchAvatarStackView.addArrangedSubview(searchAvatarTextField)
+        searchAvatarStackView.addArrangedSubview(searchAvatarButton)
+        
         stackView.addArrangedSubview(randomEmojiButton)
         stackView.addArrangedSubview(emojiesButton)
+        stackView.addArrangedSubview(searchAvatarStackView)
         stackView.addArrangedSubview(avatarsButton)
         stackView.addArrangedSubview(appleReposButton)
         
@@ -133,7 +166,9 @@ final class HomeViewController: UIViewController {
             .map { _ in
                 Void()
             },
-                                          getEmojiButtonTappedObservable: randomEmojiButton.rx.tap.asObservable())
+                                          getEmojiButtonTappedObservable: randomEmojiButton.rx.tap.asObservable(),
+                                        searchAvatarButtonTappedObservable: searchAvatarButton.rx.tap.asObservable(),
+                                        searchFieldObservable: searchAvatarTextField.rx.text.orEmpty.asObservable())
         
         let output = homeViewModel?.connect(input: input)
         
@@ -152,6 +187,17 @@ final class HomeViewController: UIViewController {
                     self?.randomImage.isHidden = true
                 }
             }).disposed(by: disposeBag)
+        
+        output?.searchAvatarObservable
+            .drive(onNext: { [weak self] avatar in
+                if let avatarURL = URL(string: avatar) {
+                    self?.randomImage.download(from: avatarURL)
+                    self?.randomImage.isHidden = false
+                } else {
+                    self?.randomImage.isHidden = true
+                    self?.showAlert(withMessage: avatar)
+                }
+            }).disposed(by: disposeBag)
     }
     
     @objc private func emojiesListDidTapped() {
@@ -160,5 +206,11 @@ final class HomeViewController: UIViewController {
     
     @objc private func appleRepositoriesDidTapped() {
         homeCoordinatorDelegate?.homeViewControllerDidTapAppleRepositories(self)
+    }
+    
+    private func showAlert(withMessage message: String) {
+        let alert = UIAlertController(title: "Sorry... we had a problem.", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
 }
