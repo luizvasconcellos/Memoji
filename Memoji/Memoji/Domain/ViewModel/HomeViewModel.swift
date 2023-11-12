@@ -63,7 +63,6 @@ final class HomeViewModel {
                         ""
                     }.asObservable()
             }
-            .startWith("")
             .asDriver(onErrorJustReturn: "")
         
         let getOrRandonEmojiButtonTypeObservable = Observable.of(input.loadScreenObservable, input.getEmojiButtonTappedObservable)

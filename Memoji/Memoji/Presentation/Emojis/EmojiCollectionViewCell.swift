@@ -13,6 +13,8 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
     private lazy var emojiImage: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 64.0).isActive = true
+        view.widthAnchor.constraint(equalToConstant: 64.0).isActive = true
         
         return view
     }()

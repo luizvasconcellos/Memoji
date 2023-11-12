@@ -29,18 +29,17 @@ final class MemojiCoordinator: Coordinator {
     // MARK: - Start
     func start() {
         
-        let vc = HomeViewController()
-        vc.homeCoordinatorDelegate = self
-        vc.homeViewModel = container.container.resolve(HomeViewModel.self)
-        navigationController.pushViewController(vc, animated: true)
+        if let vc = container.container.resolve(HomeViewController.self) {
+            vc.homeCoordinatorDelegate = self
+            navigationController.pushViewController(vc, animated: true)
+        }
     }
 
     // MARK: - private Functions
     private func presentEmojisList() {
-
-        let vc = EmojisListCollectionViewController()
-
-        navigationController.pushViewController(vc, animated: true)
+        if let vc = container.container.resolve(EmojisListCollectionViewController.self) {
+            navigationController.pushViewController(vc, animated: true)
+        }
     }
     
     private func presentAppleRepositoriesScreen() {

@@ -23,7 +23,7 @@ final class UserDefaultsManager {
         
         do {
             let emojisList  = try defaults.getObject(forKey: UserDefaultsKeys.emojis, castTo: Emojis.self)
-            return emojisList
+            return Dictionary(uniqueKeysWithValues: emojisList.sorted(by: { $0.key < $1.key}))
         } catch {
             print(error.localizedDescription)
         }
