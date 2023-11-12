@@ -52,7 +52,9 @@ final class UserDefaultsManager {
     func addUserToList(_ user: User) -> Bool {
         
         do {
-            try defaults.setObject(user, forKey: UserDefaultsKeys.users)
+            var users = getUsersList()
+            users.append(user)
+            try defaults.setObject(users, forKey: UserDefaultsKeys.users)
             return true
         } catch {
             print (error.localizedDescription)

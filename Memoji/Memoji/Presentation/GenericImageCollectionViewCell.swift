@@ -1,5 +1,5 @@
 //
-//  EmojiCollectionViewCell.swift
+//  GenericImageCollectionViewCell.swift
 //  Memoji
 //
 //  Created by Luiz Vasconcellos on 07/11/23.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class EmojiCollectionViewCell: UICollectionViewCell {
+final class GenericImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Elements
-    private lazy var emojiImage: UIImageView = {
+    private lazy var cellImage: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 64.0).isActive = true
@@ -20,10 +20,10 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Properties
-    var emojiUrl: String? {
+    var imageUrl: String? {
         didSet {
-            if let url = URL(string: emojiUrl ?? "") {
-                emojiImage.download(from: url)
+            if let url = URL(string: imageUrl ?? "") {
+                cellImage.download(from: url)
             }
         }
     }
@@ -45,13 +45,13 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
         
         self.backgroundColor = .clear
         
-        contentView.addSubview(emojiImage)
+        contentView.addSubview(cellImage)
         
         NSLayoutConstraint.activate([
-            emojiImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
-            emojiImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 4),
-            emojiImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4),
-            emojiImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
+            cellImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
+            cellImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 4),
+            cellImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4),
+            cellImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
         ])
     }
 }

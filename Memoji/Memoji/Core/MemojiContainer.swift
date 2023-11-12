@@ -44,6 +44,10 @@ final class MemojiContainer {
             return EmojiListViewModel(api: api!)
         }
         
+        container.register(AvatarListViewModel.self) { resolver in
+            return AvatarListViewModel()
+        }
+        
         // MARK: - ViewController
         container.register(HomeViewController.self) { resolver in
             let controller = HomeViewController()
@@ -60,6 +64,12 @@ final class MemojiContainer {
         container.register(AppleRepositoriesTableViewController.self) { resolver in
             let controller = AppleRepositoriesTableViewController()
             controller.appleRepoViewModel = resolver.resolve(AppleRepoViewModel.self)
+            return controller
+        }
+        
+        container.register(AvatarListViewController.self) { resolver in
+            let controller = AvatarListViewController()
+            controller.avatarViewModel = resolver.resolve(AvatarListViewModel.self)
             return controller
         }
     }

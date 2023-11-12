@@ -47,6 +47,12 @@ final class MemojiCoordinator: Coordinator {
             navigationController.pushViewController(vc, animated: true)
         }
     }
+    
+    private func presentAvatarListScreen() {
+        if let vc = container.container.resolve(AvatarListViewController.self) {
+            navigationController.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 extension MemojiCoordinator: HomeCoordinatorDelegate {
@@ -55,7 +61,7 @@ extension MemojiCoordinator: HomeCoordinatorDelegate {
     }
     
     func homeViewControllerDidTapAvatars(_ viewController: HomeViewController) {
-        
+        presentAvatarListScreen()
     }
     
     func homeViewControllerDidTapAppleRepositories(_ viewController: HomeViewController) {

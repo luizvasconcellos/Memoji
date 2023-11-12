@@ -158,6 +158,7 @@ final class HomeViewController: UIViewController {
         randomImage.isHidden = true
         emojiesButton.addTarget(self, action: #selector(emojiesListDidTapped), for: .touchUpInside)
         appleReposButton.addTarget(self, action: #selector(appleRepositoriesDidTapped), for: .touchUpInside)
+        avatarsButton.addTarget(self, action: #selector(avatarListDidTapped), for: .touchUpInside)
     }
     
     private func setupBindings() {
@@ -206,6 +207,10 @@ final class HomeViewController: UIViewController {
     
     @objc private func appleRepositoriesDidTapped() {
         homeCoordinatorDelegate?.homeViewControllerDidTapAppleRepositories(self)
+    }
+    
+    @objc private func avatarListDidTapped() {
+        homeCoordinatorDelegate?.homeViewControllerDidTapAvatars(self)
     }
     
     private func showAlert(withMessage message: String) {

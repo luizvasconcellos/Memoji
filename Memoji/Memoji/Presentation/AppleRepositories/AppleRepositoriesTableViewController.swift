@@ -21,6 +21,7 @@ class AppleRepositoriesTableViewController: UITableViewController {
     }
     private let disposeBag = DisposeBag()
     
+    // MARK: - LifeCycle functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +30,7 @@ class AppleRepositoriesTableViewController: UITableViewController {
         setupBindings()
     }
     
+    // MARK: - Private functions
     private func registerCell() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
     }
@@ -58,6 +60,7 @@ class AppleRepositoriesTableViewController: UITableViewController {
             }).disposed(by: disposeBag)
     }
     
+    // MARK: - scrollView
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
         let contentYoffset = scrollView.contentOffset.y
