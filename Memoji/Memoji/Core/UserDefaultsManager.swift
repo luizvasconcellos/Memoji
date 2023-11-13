@@ -76,4 +76,18 @@ final class UserDefaultsManager {
         let users = getUsersList()
         return users.first(where: { $0.login == login })
     }
+    
+    func removeUserFromList(_ userId: Int) -> Bool {
+        
+        var bookmarksList = getUsersList()
+        guard let index = bookmarksList.firstIndex( where: { $0.id == userId } ) else  { return false }
+        bookmarksList.remove(at: index)
+        do {
+            try defaults.setObject(bookmarksList, forKey: UserDefaultsKeys.users)
+            return true
+        } catch {
+            print (error.localizedDescription)
+        }
+        return false
+    }
 }

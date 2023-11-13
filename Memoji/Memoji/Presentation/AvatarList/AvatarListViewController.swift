@@ -22,7 +22,7 @@ final class AvatarListViewController: UIViewController {
     
     // MARK: - Properties
     var avatarViewModel: AvatarListViewModel?
-    var refreshScreenObservable = PublishSubject<Void>()
+    var deleteUserObservable = PublishSubject<User>()
     private let reuseIdentifier = "Cell"
     private var users: [User] = [User]() {
         didSet {
@@ -69,7 +69,8 @@ extension AvatarListViewController {
             .asObservable()
             .map { _ in
                 Void()
-            })
+            },
+                                              deleteUserObservable: deleteUserObservable.asObservable())
         
         let connect = avatarViewModel?.connect(input: input)
         
@@ -78,19 +79,24 @@ extension AvatarListViewController {
                 if users.count > 0 {
                     self?.users = users
                 } else {
-                    self?.showAlert(withMessage: "Here you can see the users you searched, but until now you do not searched for someone on GitHub.")
+                    self?.showAlert(withTitle: "We do not have avatar to show, yet ;)", message: "Here you can see the users you searched, but until now you do not searched for someone on GitHub.")
+                }
+            }).disposed(by: disposeBag)
+        
+        connect?.deleteUserObservable
+            .drive(onNext: { [weak self] (isDeleted, message) in
+                if isDeleted {
+                    self?.users = self?.avatarViewModel?.users ?? []
+                } else {
+                    self?.showAlert(withTitle: "Sorry we had a problem...", message: message)
                 }
             }).disposed(by: disposeBag)
     }
     
-    private func showAlert(withMessage message: String) {
+    private func showAlert(withTitle title: String, message: String) {
         let alert = UIAlertController(title: "We do not have avatar to show, yet ;)", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    @objc private func refreshEmojiList(_ sender: Any) {
-        refreshScreenObservable.onNext(())
     }
 }
 
@@ -107,5 +113,10 @@ extension AvatarListViewController: UICollectionViewDataSource, UICollectionView
         cell.imageUrl = users[indexPath.row].avatarURL
     
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedUser = users[indexPath.row]
+        deleteUserObservable.onNext(selectedUser)
     }
 }
